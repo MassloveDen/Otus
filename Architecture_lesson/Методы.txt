@@ -1,0 +1,41 @@
+Service	        Method	Endpoint	                        	Param	    									Description
+Administration	POST	api/v1/administration/confirm/		        											Подтверждение регистрации? Автоматически
+				POST	api/v1/administration/notification/		{service, type, description}					Создание событий для сервиса уведомлений
+				POST	api/v1/administration/cleaning/			{room, time, comment}							Отправка сигнала персоналу для уборки (Автоматически?)
+				POST	api/v1/administration/repair/			{room, time, comment}							Отправка сигнала персоналу для ремонта (Автоматически?) Идея, что реже будет использоваться, можно объединить с уборкой
+				
+Clients			POST	api/v1/client/registration/																Регистрация
+				GET	api/v1/client/login/																		Аутентификация
+				GET	api/v1/client/logout/																		Выход
+				POST	api/v1/client/block/					{id}											Блокировка пользователя
+				POST	api/v1/client/booking-info/				{id}											Информация о забронированном номере
+				POST	api/v1/client/pay/																		Редирект на сервис оплаты
+				GET	api/v1/client/mobile-app/																	Получение ссылки/кода для приложения Mobile App
+				
+Mobile App	GET	api/v1/mobile-app/room-info																		Просмотр состояния комнаты
+				POST	api/v1/mobile-app/doors					{state}											Открытие/закрытие дверей
+				GET	api/v1/mobile-app/services																	Список услуг в номер?
+				
+Hotel IT System	GET	api/v1/hotel-system/payment																	Подтверждение оплаты
+				GET	api/v1/hotel-system/booking																	Подтверждение бронирования
+				POST	api/v1/hotel-system/notification		{type, email}									Отправка уведомлений клиенту/персоналу
+Hotels			GET	api/v1/hotels/list																			Получение списка отелей
+				GET	api/v1/hotels/infrastructure																Отображение информации об инфраструктуре отеля
+				GET	api/v1/hotels/map																			Карта отеля
+				GET	api/v1/hotels/rooms																			Просмотр номеров в отеле
+				GET	api/v1/hotels/calendar																		Календарь со статусами номеров по датам
+				POST	api/v1/hotels/booking					{room_id, start_date, days}						Бронирование конкретного номера
+				POST	api/v1/hotels/booking-type				{room_type, start_date, days, quantity}			Бронирование номера по типу/кол-ву
+Rooms			POST	api/v1/rooms/																			CRUD для номеров
+				GET	api/v1/rooms/								{id}	
+				PUT	api/v1/rooms/								{id}	
+				DELETE	api/v1/rooms/							{id}	
+Data Store		POST	api/v1/store/																			Хранение фотографий отелей/номеров (обновлять имеет смысл?)
+				GET	api/v1/store/								{id}	
+				DELETE	api/v1/store/							{id}	
+Employees		POST	api/v1/employees/																		CRUD для сотрудников
+				GET	api/v1/employees/							{id}	
+				PUT	api/v1/employees/							{id}	
+				DELETE	api/v1/employees/						{id}	
+				GET	api/v1/employees/list																		Список сотрудников
+				POST	api/v1/employees/clean					{id, room_id, type}								Отправка сотрудников для уборки/ремонта
