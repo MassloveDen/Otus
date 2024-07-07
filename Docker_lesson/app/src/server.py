@@ -6,35 +6,35 @@ app = Flask(__name__)
 
 def get_db_connection():
     conn = psycopg2.connect(host='localhost',
-                            database='postgresql',
-                            user='DB_USERNAME',
-                            password='DB_PASSWORD')
+                            database='postgres',
+                            user='postgres',
+                            password='1')
     return conn
-
 
 @app.route("/health")
 def hello():
     return {"status": "OK"}
 
-
 @app.route('/user', methods=['POST'])
 def create_user():
-    username = request.args.get('username')
-    first_name = request.args.get('first_name')
-    last_name = request.args.get('last_name')
-    email = request.args.get('email')
-    phone = request.args.get('phone')
+    body = request.get_json(silent=True)
+    username = body['username']
+    firstname = body['firstname']
+    lastname = body['lastname']
+    email = body['email']
+    phone = body['phone']
 
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('''
-        INSERT INTO users (username, first_name, last_name, email, phone) VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO users (username, firstname, lastname, email, phone) VALUES (%s, %s, %s, %s, %s)
         ''',
-                (username, first_name, last_name, email, phone))
+                (username, firstname, lastname, email, phone))
 
     conn.commit()
     cur.close()
     conn.close()
+    return {"user created": "OK"}
 
 @app.route('/user/<user_id>', methods=['GET', 'PUT', 'DELETE'])
 def user(user_id):
@@ -55,25 +55,27 @@ def user(user_id):
         return user_data
 
     if request.method == 'PUT':
-        username = request.args.get('username')
-        first_name = request.args.get('first_name')
-        last_name = request.args.get('last_name')
-        email = request.args.get('email')
-        phone = request.args.get('phone')
+        body = request.get_json(silent=True)
+        username = body['username']
+        firstname = body['firstname']
+        lastname = body['lastname']
+        email = body['email']
+        phone = body['phone']
 
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute(
             '''update users 
-            set username = %s, first_name = %s, last_name = %s, email = %s, phone = %s
+            set username = %s, firstname = %s, lastname = %s, email = %s, phone = %s
             WHERE id = %s
             ''',
-            (username, first_name, last_name, email, phone, user_id,))
+            (username, firstname, lastname, email, phone, user_id,))
 
         conn.commit()
 
         cur.close()
         conn.close()
+        return {"user updated": "OK"}
 
     if request.method == 'DELETE':
         conn = get_db_connection()
@@ -89,7 +91,7 @@ def user(user_id):
 
         cur.close()
         conn.close()
-
+        return {"user deleted": "OK"}
 
 # run the application
 if __name__ == "__main__":
