@@ -5,15 +5,15 @@ app = Flask(__name__)
 
 
 def get_db_connection():
-    conn = psycopg2.connect(host='localhost',
+    conn = psycopg2.connect(host='postgres',
                             database='postgres',
-                            user='postgres',
-                            password='1')
+                            user='dbuser',
+                            password='QWERTY')
     return conn
 
 @app.route("/health")
 def hello():
-    return {"status": "OK"}
+    return {"status": "OKEY"}
 
 @app.route('/user', methods=['POST'])
 def create_user():

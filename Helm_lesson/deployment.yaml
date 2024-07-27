@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app-deployment
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: otus-app
+  template:
+    metadata:
+      labels:
+        app: otus-app
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: otus
+          image: masslovden/otus:v1
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 15 # время в секундах до первого теста
+            periodSeconds: 30 # время в секундах периода, через которое выполняется проверка
+            successThreshold: 1 # кол-во попыток для успеха
+            failureThreshold: 3 # кол-во попыток для провала
+            timeoutSeconds: 5 # время сколько ждет отклика
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 5
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: postgres
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: postgres
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_DB
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_PORT

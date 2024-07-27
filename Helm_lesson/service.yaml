@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Имя Service.
+  name: otus-service
+  labels:
+    app: otus-app
+spec:
+  type: ClusterIP
+  selector:
+    app: otus-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

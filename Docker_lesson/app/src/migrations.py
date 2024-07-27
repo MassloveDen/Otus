@@ -1,10 +1,10 @@
 import psycopg2
 
 conn = psycopg2.connect(
-    host="localhost",
+    host="postgres",
     database="postgres",
-    user="postgres",
-    password="1")
+    user="dbuser",
+    password="QWERTY")
 
 cur = conn.cursor()
 cur.execute('DROP TABLE IF EXISTS users;')
@@ -17,6 +17,5 @@ cur.execute('CREATE TABLE users (id serial PRIMARY KEY,'
             )
 
 conn.commit()
-
 cur.close()
 conn.close()

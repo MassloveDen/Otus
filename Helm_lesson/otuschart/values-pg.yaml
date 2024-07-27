@@ -1,0 +1,13 @@
+---
+global:
+  postgresql:
+    auth:
+      postgresPassword: "QWERTY"
+      username: "dbuser"
+      password: "dbpassword"
+      database: "postgres"
+      existingSecret: ""
+      secretKeys:
+        adminPasswordKey: "admindbuser"
+        userPasswordKey: "admindbpass"
+        replicationPasswordKey: ""
