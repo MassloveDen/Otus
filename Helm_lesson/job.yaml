@@ -1,42 +1,84 @@
+#apiVersion: batch/v1
+#kind: Job
+#metadata:
+#  name: python-migrate
+#spec:
+#  template:
+#    spec:
+#      containers:
+#        - name: otus-app
+#          image: masslovden/otus:v1.1
+#          command: ["/bin/sh", "-c"]
+#          args: ["python migrations.py"]
+#          env:
+#            - name: DB_USER
+#              valueFrom:
+#                secretKeyRef:
+#                  name: postgres
+#                  key: POSTGRES_USER
+#            - name: DB_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: postgres
+#                  key: POSTGRES_PASSWORD
+#            - name: DB_NAME
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: postgres-config
+#                  key: POSTGRES_DB
+#            - name: DB_HOST
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: postgres-config
+#                  key: DB_HOST
+#            - name: DB_PORT
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: postgres-config
+#                  key: DB_PORT
+#      restartPolicy: Never
+#  backoffLimit: 4
+
+
+# Source: hello-chart/templates/initdb.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: python-migrate
+  name: "initdb"
 spec:
+  # POD
   template:
+    metadata:
+      name: "initdb"
     spec:
-      containers:
-        - name: otus-app
-          image: masslovden/otus:latest
-          command: [ "bash" ]
-          args:
-            - -c
-            - python bin/console migration.py
-          env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  key: POSTGRES_USER
-                  name: postgres
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: POSTGRES_PASSWORD
-                  name: postgres
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: POSTGRES_DB
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: DB_HOST
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: DB_PORT
       restartPolicy: Never
-  backoffLimit: 4
+      initContainers:
+        - name: check-db-ready
+          image: postgres:16.0
+          env:
+            - name: POSTGRES_HOST
+              value: "postgres"
+            - name: POSTGRES_PORT
+              value: "5432"
+          command:
+            - sh
+            - "-c"
+            - |
+              until pg_isready -h $POSTGRES_HOST  -p  $POSTGRES_PORT;
+              do echo waiting for database; sleep 2; done;
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://dbuser:QWERTY@postgres:5432/postgres"
+        image: postgres:16.0
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+              CREATE TABLE users (id serial PRIMARY KEY, username varchar (256) NOT NULL, firstName varchar (50) NOT NULL, lastName varchar (50) NOT NULL, email varchar (50) NOT NULL, phone varchar (50) NOT NULL);
+            EOF
+
+  backoffLimit: 2
+

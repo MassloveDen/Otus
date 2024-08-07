@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: otus
-          image: masslovden/otus:v1
+          image: masslovden/otus:v1.2
           readinessProbe:
             httpGet:
               path: /health

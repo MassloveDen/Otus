@@ -1,21 +1,21 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  # Имя Service.
-  name: otus-monitor
+  name: metrics-app
   labels:
     app: otus-app
+
 spec:
   endpoints:
     - port: metrics
-      path: /metrics
       scheme: http
-      interval: 60s
+      interval: 30s
+      path: /metrics
+#  jobLabel: stack
+  namespaceSelector:
+    matchNames:
+      - default
   selector:
     matchLabels:
       app: otus-app
-  namespaceSelector:
-    matchNames:
-      -production
-
-
+  

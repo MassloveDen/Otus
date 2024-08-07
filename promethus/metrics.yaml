@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: metrics-app
+  labels:
+    app: otus-app
+spec:
+  selector:
+    app: otus-app
+  ports:
+    - protocol: TCP
+      name: metrics
+      port: 9090
+      targetPort: 9000
