@@ -78,6 +78,7 @@ spec:
           - |
             psql $DATABASE_URI <<'EOF'
               CREATE TABLE users (id serial PRIMARY KEY, username varchar (256) NOT NULL, firstName varchar (50) NOT NULL, lastName varchar (50) NOT NULL, email varchar (50) NOT NULL, phone varchar (50) NOT NULL);
+              CREATE TABLE auth (id serial PRIMARY KEY, username varchar (256) NOT NULL, email varchar (50) NOT NULL, password varchar (50) NOT NULL);
             EOF
 
   backoffLimit: 2
