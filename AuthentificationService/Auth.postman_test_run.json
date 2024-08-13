@@ -1,0 +1,198 @@
+{
+	"id": "24e00ead-77c8-4d26-bd4b-dd9dbcdfff4e",
+	"name": "Auth",
+	"timestamp": "2024-08-13T12:39:00.624Z",
+	"collection_id": "23350844-9a385205-697f-4392-bb3d-965158ed83f6",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-08-13T12:38:59.256Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "5aa83a09-a516-4685-92ca-73fbe9c4d604",
+			"name": "Регистрация",
+			"url": "http://arch.homework/register",
+			"time": 181,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				181
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "70f6678d-35a2-41d6-87c4-e95abd288a8e",
+			"name": "Логин",
+			"url": "http://arch.homework/login",
+			"time": 17,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				17
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "20cfd40c-08ec-495f-9cea-613ee7b618be",
+			"name": "Проверка без аутентификации",
+			"url": "http://arch.homework/users/me",
+			"time": 13,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				13
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "e376d6d4-6281-4e51-817d-6ea85e90ecec",
+			"name": "Аутентификация",
+			"url": "http://arch.homework/auth",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				7
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "f42e8f28-7eb1-4ef5-8178-65cf415acb78",
+			"name": "Информация о пользователе",
+			"url": "http://arch.homework/users/me",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				19
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "afcb0287-e262-4031-9e4d-b8ea8bc91282",
+			"name": "Изменение информации о пользователе",
+			"url": "http://arch.homework/users/me",
+			"time": 270,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				270
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "514181c7-1131-4076-87e8-198e7d0940cf",
+			"name": "Выход",
+			"url": "http://arch.homework/logout",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				6
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "50b56f88-1ec6-41e7-a78d-a2623c8d0b18",
+			"name": "http://arch.homework/vers",
+			"url": "http://arch.homework/vers",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				5
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 518,
+	"collection": {
+		"requests": [
+			{
+				"id": "5aa83a09-a516-4685-92ca-73fbe9c4d604",
+				"method": "POST"
+			},
+			{
+				"id": "70f6678d-35a2-41d6-87c4-e95abd288a8e",
+				"method": "POST"
+			},
+			{
+				"id": "20cfd40c-08ec-495f-9cea-613ee7b618be",
+				"method": "GET"
+			},
+			{
+				"id": "e376d6d4-6281-4e51-817d-6ea85e90ecec",
+				"method": "GET"
+			},
+			{
+				"id": "f42e8f28-7eb1-4ef5-8178-65cf415acb78",
+				"method": "GET"
+			},
+			{
+				"id": "afcb0287-e262-4031-9e4d-b8ea8bc91282",
+				"method": "PUT"
+			},
+			{
+				"id": "514181c7-1131-4076-87e8-198e7d0940cf",
+				"method": "GET"
+			},
+			{
+				"id": "50b56f88-1ec6-41e7-a78d-a2623c8d0b18",
+				"method": "GET"
+			}
+		]
+	}
+}
