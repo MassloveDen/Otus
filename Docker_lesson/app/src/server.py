@@ -108,6 +108,48 @@ def metrics():
     return generate_latest()
 
 
+@app.route('/register', methods=['POST'])
+def register():
+    body = request.get_json(silent=True)
+    username = body['username']
+    email = body['email']
+    password = body['password']
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('''
+        INSERT INTO auth (username, email, password) VALUES (%s, %s, %s)
+        ''',
+                (username, email, password))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"Registration success"}
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    body = request.get_json(silent=True)
+    username = body['username']
+    password = body['password']
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('''
+        SELECT password FROM auth 
+                WHERE username = %s
+        ''',
+                (username, ))
+
+    user_pass = cur.fetchall()
+
+    cur.close()
+    conn.close()
+    if user_pass == password:
+        print("Login success")
+
+
 # run the application
 if __name__ == "__main__":
     register_metrics(app)

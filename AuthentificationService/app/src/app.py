@@ -23,7 +23,7 @@ def vers():
         cur = conn.cursor()
         cur.execute("select version()")
         result = cur.fetchone()
-    return result
+    return {"res": result}
 
 
 @app.route('/users/me')
@@ -44,12 +44,9 @@ def me():
             "select avatar_uri, age from user_profile "
             "where id={} limit 1".format(data['id']))
         result = cur.fetchone()
-        rows = [dict(r.items()) for r in result]
-
     if rows:
-        data['avatar_uri'] = rows[0]['avatar_uri']
-        data['age'] = rows[0]['age']
-
+        data['avatar_url'] = result[0][0]
+        data['age'] = result[0][1]
     return data
 
 

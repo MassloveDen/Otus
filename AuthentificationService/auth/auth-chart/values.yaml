@@ -1,4 +1,4 @@
-replicaCount: 1
+vfreplicaCount: 1
 
 fullnameOverride: "auth"
 
