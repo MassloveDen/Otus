@@ -58,6 +58,30 @@ spec:
                   last_name varchar not null default ''
               );
               insert into auth_user (login, password) values ('admin', 'password');
+              drop table if exists user_profile;
+                create table user_profile (
+                    id integer primary key,
+                    avatar_uri varchar,
+                    age integer,
+                    balance integer
+                );
+              drop table if exists products;
+                create table products (
+                    id integer primary key,
+                    name varchar,
+                    description varchar,
+                    cost integer
+                );
+              insert into products (name, description, cost) values ('Квартира', '3 комнаты', '20');
+              insert into products (name, description, cost) values ('Машина', '4 двери', '10');
+              insert into products (name, description, cost) values ('Кот', 'Домашенее животное', '3');
+              drop table if exists orders;
+                create table orders (
+                    id integer primary key,
+                    user_id integer,
+                    product_id integer,
+                    price integer
+                );
             EOF
 
   backoffLimit: 0

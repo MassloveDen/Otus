@@ -42,4 +42,52 @@ spec:
               name: auth
               port:
                 number: 9000
-
+        - path: /health
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /products
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /orders
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /orderPurchase
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /updateBalance
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /drop
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
+        - path: /users
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 9000
