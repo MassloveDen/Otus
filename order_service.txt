@@ -1,0 +1,61 @@
+@startuml
+actor       Customer
+boundary    User_ui
+
+participant Auth
+database    auth_db
+
+participant Products #gold
+database    products_db #gold
+
+participant Orders #grey
+database    orders_db #grey
+
+participant Billing #green
+database    billing_db #green
+
+queue       Notification_queue
+
+
+Customer-> User_ui ++: Open website
+User_ui -> Auth ++: Registration form
+Auth-> auth_db ++: create new user or login
+return ok
+return token
+return Registration/login success
+
+
+Customer-> User_ui ++ #gold: Open assortment
+User_ui -> Products ++ #gold: Get products
+Products -> products_db ++ #gold: select products
+return products list
+return Render products
+return Check assortment
+
+
+Customer -> User_ui ++ #grey: Add product into bucket
+User_ui -> Orders ++ #grey: create order
+Orders -> orders_db ++ #grey: insert new order
+return ok
+return order id
+return order price
+
+
+Customer -> User_ui ++ #green: Buy order
+User_ui -> Orders ++ #green: check user orders
+Orders -> Billing ++ #green: send order and user ids
+Billing -> billing_db ++ #green: check user balance
+return balance
+return balance check result
+return order is being processed
+return send message on email
+
+Orders -> Notification_queue ++: Send message
+
+alt #lightblue Balance ok
+  Notification_queue -> Customer: order bought success
+else #pink Error
+  Notification_queue -> Customer: Customer need more money
+end
+return message sended
+@enduml
